@@ -1,0 +1,26 @@
+
+__pycache__/
+*.py[cod]
+*$py.class
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+.ENV/
+
+# Flask instance folder (used for config, etc.)
+instance/
+.webassets-cache/
+
+# Logs
+*.log
+
+.cache
+# dotenv environment variables
+.env
+.env.*
+
+# IDE / editor configs
+.vscode/
+.idea/
