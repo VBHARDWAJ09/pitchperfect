@@ -2,3 +2,5 @@ faiss-cpu
 sentence-transformers
 pandas
 openai
+pymongo
+flask-pymongo

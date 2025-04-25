@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 import ast
 # from utils.faiss import build_faiss_index, search_faiss_index
 from utils.gpt_prompt import build_system_prompt, build_user_prompt
+from utils.database import *
 
 load_dotenv()
 
@@ -110,4 +111,9 @@ def submit_data():
     return jsonify(response), 200
 
 if __name__ == '__main__':
+    databaseRes = connectDB()
+    if databaseRes['connected']:
+        print({"connected":databaseRes['connected'],"database":databaseRes['database']})
+    else:
+        print({"connected":"not"})
     app.run(debug=True)
