@@ -78,8 +78,15 @@ def analysescripts():
     for agent in agents:
         transcript_agent = get_agent_transcript(agent)
         review = call_gpt_api(transcript_agent)
+        data = {"pitch" : f"{transcript_agent}","review" : f"{review}",
+            "sentAt": datetime.now().isoformat()}
+        save_data("pitch_data",data)
         send_email_agent(subject, review, sender, recipients, password)
-        read_transcripts.append({ f"{agent}": transcript_agent, "review" : review})
+        read_transcripts.append({
+            f"{agent}": transcript_agent,
+            "review": review,
+            "sentAt": datetime.now().isoformat()
+        })
 
     return jsonify({"agents":agents,"data": read_transcripts, "isSuccess": True}), 200
 
