@@ -91,8 +91,9 @@ def analysescripts():
 
 @app.route('/', methods=['GET'])
 def server_running():
-    db_conn = get_db_connection()
-    return jsonify({"message": "Welcome","isSuccess":True,"db_conn":str(db_conn)})
+    data = get_data_by_query('users',{'age': {'$eq': 25}})
+    # data = get_data_by_id('users','680b62b98f3a484cf1bdc0e7')
+    return jsonify({"message": "Welcome","isSuccess":True,"Data": data})
 
 @app.route('/submit', methods=['POST'])
 def submit_data():
@@ -104,11 +105,15 @@ def submit_data():
     age = data.get('age')
 
     # Do something with the data (this is just an example)
+    save_user_data = save_data('users',{"name":name,"age":age})
     response = {
-        "message": f"Received data for {name}, age {age}",
-        "timestamp": datetime.now().isoformat(),
-        "isSuccess": True
-    }
+            "message": f"Received data for {name}",
+            "timestamp": datetime.now().isoformat(),
+            "isSuccess": False,
+        }
+    if save_user_data:
+        response['isSuccess'] = True
+        response['res'] = str(save_user_data)
     return jsonify(response), 200
 
 @app.route('/sendemail', methods=['GET'])
