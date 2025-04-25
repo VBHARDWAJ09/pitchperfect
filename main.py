@@ -9,21 +9,22 @@ import ast
 # from utils.faiss import build_faiss_index, search_faiss_index
 from utils.gpt_prompt import build_system_prompt, build_user_prompt
 from utils.database import *
+from utils.email import *
 
 load_dotenv()
 
 open_ai_key = os.getenv("OPEN_AI_KEY")
 open_ai_api_endpoints = os.getenv("OPEN_AI_API_ENDPOINT")
 deployment = os.getenv("DEPLOYMENT")
-
-# openai.api_type = "azure"
-# openai.api_key = open_ai_key
-# openai.api_base = open_ai_api_endpoints
-# openai.api_version = "2023-05-15"
-
 client = AzureOpenAI(api_key=open_ai_key,api_version="2024-10-21",azure_endpoint=open_ai_api_endpoints)
 
+subject = "Pitch Overview"
+body = "This is the body of the text message"
+sender = "sagar24263@gmail.com"
+recipients = ["chirag3390garg@gmail.com"]
+password = os.getenv("EMAIL_PASSWORD")
 
+global db_connection
 
 # def generate_embeddings(text):
 #     # response = openai.Embedding.create(
@@ -85,13 +86,14 @@ def analysescripts():
     for agent in agents:
         transcript_agent = get_agent_transcript(agent)
         review = call_gpt_api(transcript_agent)
+        send_email_agent(subject, review, sender, recipients, password)
         read_transcripts.append({ f"{agent}": transcript_agent, "review" : review})
 
     return jsonify({"agents":agents,"data": read_transcripts, "isSuccess": False, "message": "agentId is required"}), 400
 
 @app.route('/', methods=['GET'])
 def server_running():
-    return jsonify({"message": "Welcome","isSuccess":True})
+    return jsonify({"message": "Welcome","isSuccess":True,"db_connection":db_connection})
 
 @app.route('/submit', methods=['POST'])
 def submit_data():
@@ -110,10 +112,21 @@ def submit_data():
     }
     return jsonify(response), 200
 
+@app.route('/sendemail', methods=['GET'])
+def send_email():
+    send_email_agent(subject, body, sender, recipients, password)
+    response = {
+        "message": f"Email sent successfully",
+        "timestamp": datetime.now().isoformat(),
+        "isSuccess": True
+    }
+    return jsonify(response), 200
+
 if __name__ == '__main__':
     databaseRes = connectDB()
     if databaseRes['connected']:
-        print({"connected":databaseRes['connected'],"database":databaseRes['database']})
+        print({"connected":databaseRes['connected']})
+        db_connection = databaseRes['database']
     else:
         print({"connected":"not"})
     app.run(debug=True)
