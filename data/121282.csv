@@ -1,0 +1,21 @@
+Speaker,Time,Dialogue
+Agent,00:00:00-00:02:00,"Hello Mr. Sharma, thank you for taking time to discuss investment options with us today. My name is Raj from SafeInvest Financial Services. How are you today?"
+Customer,00:00:00-00:02:00,"Hello Raj, main theek hoon. Aapka shukriya. Accha lag raha hai aapko."
+Agent,00:00:00-00:02:00,"Main bhi theek hoon, dhanyavaad. So, aapko ULIP investment plan ke baare mein jaankari chahiye hai?"
+Customer,00:00:00-00:02:00,"Haan, mainne baarein suni hai ULIP ke, lekin kuch details jaankari chahiye."
+Agent,00:02:00-00:10:00,"Thik hai, ULIP ya Unit Linked Insurance Plan ek combination hai insurance aur investment ke. Isme aapko insurance cover milta hai aur samay ke saath investment bhi ho jati hai."
+Customer,00:02:00-00:10:00,"Achaa, to yeh kaise kaam karta hai?"
+Agent,00:02:00-00:10:00,"Aapko premium dena hoga, jo ki investment aur insurance charge mein divide hota hai. Aapke investment ke liye units allot kiye jaayenge mutual fund jaise."
+Customer,00:02:00-00:10:00,"Mutual fund jaise? Main mutual fund mein invest karta hoon, lekin yeh kya common hai?"
+Agent,00:02:00-00:10:00,"ULIP mein aapko ekasset allocation option chuni hai, jaise equity, debt ya balanced. Aap apna risk profile according investment kar sakte hain."
+Customer,00:10:00-00:20:00,Main to equity mein zyada invest nahi karta. Mujhe moderate risk chahiye.
+Agent,00:10:00-00:20:00,"Thik hai, aapko balanced fund option chun sakte hain. Isme 65% equity aur 35% debt mein investment kiya jata hai."
+Customer,00:10:00-00:20:00,"Achaa, lekin kya yeh tax benefits deti hai?"
+Agent,00:10:00-00:20:00,"Haan, ULIP mein aapko premium payment tax dedektion milega Section 80C ke tahaat aur maturity amount tax free hota hai."
+Customer,00:10:00-00:20:00,Tax free? Yeh achaa lagta hai.
+Agent,00:20:00-00:28:00,Aapko ULIP mein invest karne ki soch raha hai?
+Customer,00:20:00-00:28:00,"Accha lag raha hai, lekin main ek baar aur apni family se baat karunga. Aaj ke liye shayad nahi."
+Agent,00:20:00-00:28:00,"Thik hai Mr. Sharma, aapko har samay apni family se consulatation kar leni chahiye. Hum aapki help karne ke liye hain. Agar koi sawal rahe to humein jaldi baat karein."
+Customer,00:20:00-00:28:00,"Bilkul, aapka abhi tak ke liye dhanyavaad."
+Agent,00:20:00-00:28:00,"Shukriya Mr. Sharma, aapke samay ke liye shukriya. Aapki service ke liye hamesha taiyaar hai. Have a great day!"
+Customer,00:20:00-00:28:00,"Aapko bhi shukriya, aapko bhi accha din!"
