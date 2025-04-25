@@ -24,7 +24,6 @@ sender = "sagar24263@gmail.com"
 recipients = ["chirag3390garg@gmail.com"]
 password = os.getenv("EMAIL_PASSWORD")
 
-global db_connection
 
 # def generate_embeddings(text):
 #     # response = openai.Embedding.create(
@@ -93,7 +92,8 @@ def analysescripts():
 
 @app.route('/', methods=['GET'])
 def server_running():
-    return jsonify({"message": "Welcome","isSuccess":True,"db_connection":db_connection})
+    db_conn = get_db_connection()
+    return jsonify({"message": "Welcome","isSuccess":True,"db_conn":str(db_conn)})
 
 @app.route('/submit', methods=['POST'])
 def submit_data():
@@ -126,7 +126,8 @@ if __name__ == '__main__':
     databaseRes = connectDB()
     if databaseRes['connected']:
         print({"connected":databaseRes['connected']})
-        db_connection = databaseRes['database']
+        set_db_connection(databaseRes['database'])
+        
     else:
         print({"connected":"not"})
     app.run(debug=True)

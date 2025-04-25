@@ -2,6 +2,7 @@ from pymongo import MongoClient, errors
 import os
 
 db_url = os.getenv("MONGO_URI")
+db_connection = None
 
 def connectDB():
     try:
@@ -16,3 +17,10 @@ def connectDB():
 
     except Exception as e:
         return {"database":None, "connected":False}
+
+def set_db_connection(conn):
+    global db_connection
+    db_connection = conn
+
+def get_db_connection():
+    return db_connection
