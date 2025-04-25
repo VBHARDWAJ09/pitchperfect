@@ -21,7 +21,9 @@ def analysescripts():
     for call in calls_data:
         agent = call["agentID"]
         callID = call["callID"]
-        email = call['emailID']
+        agent_data = get_data_by_query('agents',{"agentID":agent})
+        if len(agent_data) >= 0:
+            email = agent_data[0]['emailID']
 
         #check if call is already analysed
         call = get_data_by_query('pitch_data', {'callID': int(callID)})
@@ -43,10 +45,12 @@ def analysescripts():
             review = call_gpt_api(transcript_agent)
             pitch_score = get_score_from_review(review)
             save_pitch_data(transcript_agent, review, pitch_score, callID,agent)
-            send_email_agent(subject, review, sender, email, password)
+            if email:
+                send_email_agent(subject, review, sender, email, password)
             score = int(pitch_score.split('/')[0])
             update_agent_data(agent, score)
-            update_call_analysis_status(call)
+            if call:
+                update_call_analysis_status(call)
             read_transcripts.append({
                 f"{agent}": transcript_agent,
                 "review": review,
@@ -73,7 +77,7 @@ def analysescriptbycallid():
     if transcript_agent:
         review = call_gpt_api(transcript_agent)
         pitch_score = get_score_from_review(review)
-        save_pitch_data(transcript_agent, review, pitch_score, callID,agentID)
+        save_pitch_data(transcript_agent, review, pitch_score, callID,agent)
         send_email_agent(subject, review, sender, recipients, password)
         score = int(pitch_score.split('/')[0])
         update_agent_data(agent, score)
