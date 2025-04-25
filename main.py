@@ -10,6 +10,7 @@ import ast
 from utils.gpt_prompt import build_system_prompt, build_user_prompt
 from utils.database import *
 from utils.email import *
+import re
 
 load_dotenv()
 
@@ -55,6 +56,15 @@ def call_gpt_api(json_output):
     content = completion.choices[0].message.content
     return content
 
+def get_score_from_review(review):
+    match = re.search(r"Total Score:\s*(\d+/\d+)", review)
+    score = 0
+    if match:
+        score = match.group(1)
+    return score
+    
+
+
 app = Flask(__name__)
 
 @app.route('/getagenttranscript', methods=['GET'])
@@ -78,13 +88,16 @@ def analysescripts():
     for agent in agents:
         transcript_agent = get_agent_transcript(agent)
         review = call_gpt_api(transcript_agent)
+        pitch_score = get_score_from_review(review)
         data = {"pitch" : f"{transcript_agent}","review" : f"{review}",
+                "score" : pitch_score,
             "sentAt": datetime.now().isoformat()}
         save_data("pitch_data",data)
         send_email_agent(subject, review, sender, recipients, password)
         read_transcripts.append({
             f"{agent}": transcript_agent,
             "review": review,
+            "score" : pitch_score,
             "sentAt": datetime.now().isoformat()
         })
 
