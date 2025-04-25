@@ -23,8 +23,7 @@ deployment = os.getenv("DEPLOYMENT")
 
 client = AzureOpenAI(api_key=open_ai_key,api_version="2024-10-21",azure_endpoint=open_ai_api_endpoints)
 
-subject = "Pitch Overview"
-body = "This is the body of the text message"
+subject = "Feedback Report on Your Recent Customer Interaction"
 sender = "sagar24263@gmail.com"
 recipients = ["chirag3390garg@gmail.com"]
 password = os.getenv("EMAIL_PASSWORD")
