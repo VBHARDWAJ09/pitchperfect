@@ -1,4 +1,4 @@
-Speaker,Time,Dialogue
+speaker,time,text
 Agent,00:00:00-00:02:00,"Hello Mr. Sharma, thank you for taking time to discuss investment options with us today. My name is Raj from SafeInvest Financial Services. How are you today?"
 Customer,00:00:00-00:02:00,"Hello Raj, main theek hoon. Aapka shukriya. Accha lag raha hai aapko."
 Agent,00:00:00-00:02:00,"Main bhi theek hoon, dhanyavaad. So, aapko ULIP investment plan ke baare mein jaankari chahiye hai?"
