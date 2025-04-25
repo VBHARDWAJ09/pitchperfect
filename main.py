@@ -127,7 +127,6 @@ def update_call_analysis_status(call):
     objId = call['_id']
     replace_data_by_id("call_history",objId,call)
 
-app = Flask(__name__)
 
 @app.route('/getagentdata', methods=['GET'])
 def getagentdata():
@@ -149,6 +148,15 @@ def get_all_agents_data():
     for agent in data:
         agent['calls'] = get_data_by_query('call_history',{'agentID': agent['agentID']})
     return jsonify({"data": data,"isSuccess":True})
+
+
+
+@app.route('/getCallIdData', methods=['GET'])
+def get_call_id_data():
+    call_id = request.args.get('callid')
+    data = get_data_by_query('pitch_data',{'callID':int(call_id)})
+    return jsonify({"data": data,"isSuccess":True})
+
 
 @app.route('/analysescripts', methods=['GET'])
 def analysescripts():
