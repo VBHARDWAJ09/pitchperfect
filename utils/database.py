@@ -54,3 +54,12 @@ def get_data_by_query(collection, query):
     data = [{**doc, '_id': str(doc['_id'])} for doc in results]
 
     return data
+
+def replace_data_by_id(collection, id, new_data):
+    col = db_connection[collection]
+    
+    # Ensure _id is not duplicated in new_data
+    new_data['_id'] = ObjectId(id)
+    
+    result = col.replace_one({'_id': ObjectId(id)}, new_data)
+    return result.modified_count > 0  # Returns True if replaced
