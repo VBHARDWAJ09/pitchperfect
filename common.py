@@ -58,7 +58,8 @@ def get_calls_data():
     now = datetime.now(ist)
     start_of_today = datetime.combine(now.date(), time.min).astimezone(ist)
     start_of_today_str = start_of_today.isoformat()
-    query = {"time": {"$gte": start_of_today_str}}
+    # query = {"time": {"$gte": start_of_today_str}}
+    query = {}
     return get_data_by_query("call_history", query)
 
 # Transcript Processing Functions
