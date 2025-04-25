@@ -32,7 +32,6 @@ password = os.getenv("EMAIL_PASSWORD")
 #     return "response['data'][0]['embedding']"
 
 def get_agent_transcript(agentId):
-    #return agentId
     transcripts_df = pd.read_csv(f"data/{agentId}.csv")
     transcripts_df.columns = transcripts_df.columns.str.strip()
 
@@ -55,11 +54,6 @@ def call_gpt_api(json_output):
     
     content = completion.choices[0].message.content
     return content
-
-# if __name__ == "__main__":
-#     query_text = "Provide feedback for the agent's sales pitch throughout the day."
-#     #res = call_gpt_api(json_output)
-#     #print(get_agent_transcript("PW47633"))
 
 app = Flask(__name__)
 
@@ -87,7 +81,7 @@ def analysescripts():
         send_email_agent(subject, review, sender, recipients, password)
         read_transcripts.append({ f"{agent}": transcript_agent, "review" : review})
 
-    return jsonify({"agents":agents,"data": read_transcripts, "isSuccess": False, "message": "agentId is required"}), 400
+    return jsonify({"agents":agents,"data": read_transcripts, "isSuccess": True}), 200
 
 @app.route('/', methods=['GET'])
 def server_running():
