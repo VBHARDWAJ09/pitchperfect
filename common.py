@@ -100,11 +100,11 @@ def get_score_from_review(review):
     match = re.search(r"Total Score:\s*(\d+/\d+)", review)
     return match.group(1) if match else 0
 
-def save_pitch_data(transcript_agent, review, pitch_score, callID):
+def save_pitch_data(transcript_agent, review, pitch_score, callID,agentID):
     data = {
         "pitch": f"{transcript_agent}",
         "review": f"{review}",
-        "agentId": review,
+        "agentId": agentID,
         "score": pitch_score,
         "callID": callID,
         "sentAt": datetime.now().isoformat()
