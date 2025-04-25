@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 import ast
 # from utils.faiss import build_faiss_index, search_faiss_index
 from utils.gpt_prompt import build_system_prompt, build_user_prompt
+from utils.email import *
 
 load_dotenv()
 
@@ -22,7 +23,11 @@ deployment = os.getenv("DEPLOYMENT")
 
 client = AzureOpenAI(api_key=open_ai_key,api_version="2024-10-21",azure_endpoint=open_ai_api_endpoints)
 
-
+subject = "Pitch Overview"
+body = "This is the body of the text message"
+sender = "sagar24263@gmail.com"
+recipients = ["chirag3390garg@gmail.com"]
+password = os.getenv("EMAIL_PASSWORD")
 
 # def generate_embeddings(text):
 #     # response = openai.Embedding.create(
@@ -84,6 +89,7 @@ def analysescripts():
     for agent in agents:
         transcript_agent = get_agent_transcript(agent)
         review = call_gpt_api(transcript_agent)
+        send_email_agent(subject, review, sender, recipients, password)
         read_transcripts.append({ f"{agent}": transcript_agent, "review" : review})
 
     return jsonify({"agents":agents,"data": read_transcripts, "isSuccess": False, "message": "agentId is required"}), 400
@@ -104,6 +110,16 @@ def submit_data():
     # Do something with the data (this is just an example)
     response = {
         "message": f"Received data for {name}, age {age}",
+        "timestamp": datetime.now().isoformat(),
+        "isSuccess": True
+    }
+    return jsonify(response), 200
+
+@app.route('/sendemail', methods=['GET'])
+def send_email():
+    send_email_agent(subject, body, sender, recipients, password)
+    response = {
+        "message": f"Email sent successfully",
         "timestamp": datetime.now().isoformat(),
         "isSuccess": True
     }
