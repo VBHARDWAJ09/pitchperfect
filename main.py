@@ -15,7 +15,7 @@ import re
 
 load_dotenv()
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 open_ai_key = os.getenv("OPEN_AI_KEY")
 open_ai_api_endpoints = os.getenv("OPEN_AI_API_ENDPOINT")
@@ -68,8 +68,6 @@ def get_score_from_review(review):
     
 
 
-app = Flask(__name__)
-
 @app.route('/getagenttranscript', methods=['GET'])
 def getagenttranscript():
     agentId = request.args.get('agentId')
@@ -82,6 +80,8 @@ def getagenttranscript():
 @app.route('/getallagentsPerformance', methods=['GET'])
 def get_all_agents_data():
     data = get_data_by_query('agents',{})
+    for agent in data:
+        agent['calls'] = get_data_by_query('call_history',{'agentID': agent['agentID']})
     return jsonify({"data": data,"isSuccess":True})
 
 @app.route('/analysescripts', methods=['GET'])
