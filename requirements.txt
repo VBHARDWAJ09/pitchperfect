@@ -4,3 +4,4 @@ pandas
 openai
 pymongo
 flask-pymongo
+flask_cors
