@@ -155,12 +155,12 @@ def analysescripts():
     calls_data = get_calls_data()
     read_transcripts =[]
 
-    #agents = ast.literal_eval(agent_ids_str)
+    agents = []
     
     for call in calls_data:
         agent = call["agentID"]
         callID = call["callID"]
-
+        agents.append(agent)
         transcript_agent = get_call_transcript(callID)
 
         # if transcript_agent in None:
