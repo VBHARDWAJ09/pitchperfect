@@ -1,0 +1,18 @@
+from pymongo import MongoClient, errors
+import os
+
+db_url = os.getenv("MONGO_URI")
+
+def connectDB():
+    try:
+        client = MongoClient(db_url, serverSelectionTimeoutMS=5000)
+        database = client["pitchperfectai"]
+        client.admin.command('ping')  # Check connection
+
+        return {"database":database, "connected":True}
+
+    except errors.ServerSelectionTimeoutError as err:
+        return {"database":None, "connected":False}
+
+    except Exception as e:
+        return {"database":None, "connected":False}
