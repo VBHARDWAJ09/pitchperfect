@@ -4,6 +4,7 @@ from openai import AzureOpenAI
 import pandas as pd
 import os
 import json
+from flask_cors import CORS
 from dotenv import load_dotenv
 import ast
 # from utils.faiss import build_faiss_index, search_faiss_index
@@ -13,6 +14,8 @@ from utils.email import *
 import re
 
 load_dotenv()
+app = Flask(__name__)
+CORS(app)
 
 open_ai_key = os.getenv("OPEN_AI_KEY")
 open_ai_api_endpoints = os.getenv("OPEN_AI_API_ENDPOINT")
@@ -76,6 +79,10 @@ def getagenttranscript():
     transcript = get_agent_transcript(agentId)
     return jsonify({"data": transcript,"isSuccess":True})
 
+@app.route('/getallagentsPerformance', methods=['GET'])
+def get_all_agents_data():
+    data = get_data_by_query('agents',{})
+    return jsonify({"data": data,"isSuccess":True})
 
 @app.route('/analysescripts', methods=['GET'])
 def analysescripts():
@@ -114,14 +121,12 @@ def submit_data():
     data = request.get_json()
     if not data:
         return jsonify({"message": "No input data provided", "isSuccess": False}), 400
-    
-    name = data.get('name')
-    age = data.get('age')
+
 
     # Do something with the data (this is just an example)
-    save_user_data = save_data('users',{"name":name,"age":age})
+    save_user_data = save_data('agents',data)
     response = {
-            "message": f"Received data for {name}",
+            "message": "Data Updated",
             "timestamp": datetime.now().isoformat(),
             "isSuccess": False,
         }
