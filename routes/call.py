@@ -42,8 +42,8 @@ def analysescripts():
     return jsonify({"agents": agents, "data": read_transcripts, "isSuccess": True}), 200
 
 
-@call_bp.route('/analysescriptbyid', methods=['GET'])
-def analysescriptbyid():
+@call_bp.route('/analysescriptbycallid', methods=['GET'])
+def analysescriptbycallid():
     callID = request.args.get('callid')
     query = {"callID": int(callID)}
 
