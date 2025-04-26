@@ -12,7 +12,7 @@ import pytz
 from dotenv import load_dotenv
 
 # Local imports
-from utils.gpt_prompt import build_system_prompt, build_user_prompt
+from utils.gpt_prompt import build_system_prompt, build_user_prompt, build_previous_context_prompt
 from utils.database import *
 from utils.email import *
 
@@ -87,6 +87,19 @@ def get_call_transcript(callID):
 # GPT and Analysis Functions
 def call_gpt_api(json_output):
     system_prompt = build_system_prompt()
+    user_prompt = build_user_prompt(json_output)
+    messages = [system_prompt, user_prompt]
+    completion = client.chat.completions.create(
+        model=deployment,
+        messages=messages,
+        temperature=0.3,
+        max_tokens=500
+    )
+    return completion.choices[0].message.content
+    
+def call_gpt_api_with_context(json_output,context):
+    system_prompt = build_system_prompt()
+    context_prompt = build_previous_context_prompt(context)
     user_prompt = build_user_prompt(json_output)
     messages = [system_prompt, user_prompt]
     completion = client.chat.completions.create(

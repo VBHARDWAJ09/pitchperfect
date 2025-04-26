@@ -9,3 +9,9 @@ def build_user_prompt(transcripts):
         "role": "user",
         "content": f"Analyze the following call transcripts and generate a feedback report:\n\n{transcripts}"
     }
+
+def build_previous_context_prompt(previous_feedbacks):
+    return {
+        "role": "user",
+        "content": f"Here are some previous transcripts and their feedback:\n\n{previous_feedbacks}"
+    }
