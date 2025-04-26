@@ -9,7 +9,7 @@ from rag.faiss_index import *
 
 call_bp = Blueprint('call_bp', __name__)
 
-@call_bp.route('/getCallIdData', methods=['GET'])
+@call_bp.route('/getCallIdData', methods=['GET'])   
 def get_call_id_data():
     call_id = request.args.get('callid')
     data = get_data_by_query('pitch_data', {'callID': int(call_id)})
@@ -29,10 +29,10 @@ def analysescriptswithcontext():
             email = agent_data[0]['emailID']
 
         #check if call is already analysed
-        call = get_data_by_query('pitch_data', {'callID': int(callID)})
+        existing_call = get_data_by_query('pitch_data', {'callID': int(callID)})
 
-        if call:
-            call_feedback = call[0]
+        if existing_call:
+            call_feedback = existing_call[0]
             read_transcripts.append({
                     f"{agent}": call_feedback['pitch'],
                     "review": call_feedback['review'],
@@ -57,8 +57,7 @@ def analysescriptswithcontext():
                 send_email_agent(subject, review, sender, email, password)
             score = int(pitch_score.split('/')[0])
             update_agent_data(agent, score)
-            if call:
-                update_call_analysis_status(call)
+            update_call_analysis_status(call)
             read_transcripts.append({
                 f"{agent}": transcript_agent,
                 "review": review,
