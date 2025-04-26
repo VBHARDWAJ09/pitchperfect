@@ -22,7 +22,7 @@ def analysescripts():
         agent = call["agentID"]
         callID = call["callID"]
         agent_data = get_data_by_query('agents',{"agentID":agent})
-        if len(agent_data) >= 0:
+        if len(agent_data) > 0:
             email = agent_data[0]['emailID']
 
         #check if call is already analysed
