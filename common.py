@@ -101,7 +101,7 @@ def call_gpt_api_with_context(json_output,context):
     system_prompt = build_system_prompt()
     context_prompt = build_previous_context_prompt(context)
     user_prompt = build_user_prompt(json_output)
-    messages = [system_prompt, user_prompt]
+    messages = [system_prompt, context_prompt,user_prompt]
     completion = client.chat.completions.create(
         model=deployment,
         messages=messages,
